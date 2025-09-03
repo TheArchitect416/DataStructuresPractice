@@ -1,168 +1,176 @@
-//package DataStructures.LinkedList.Doubly;
-//
-//class Node {
-//    Integer data;
-//    Node next;
-//    Node prev;
-//
-//    Node(int data) {
-//        this.data = data;
-//        this.next = null;
-//        this.prev = null;
-//    }
-//}
-//
-//public class DLL {
-//    Node head;
-//
-//    DLL() {
-//        head = null;
-//    }
-//
-//    void insertAtHead(int val) {
-//        Node n = new Node(val);
-//        if(head != null) {
-//            head.prev = n;
-//        }
-//        n.next = head;
-//        head = n;
-//    }
-//
-//    void insertAtEnd(int val) {
-//        Node tail = new Node(val);
-//        if (head == null) {
-//            head = tail;
-//            return;
-//        }
-//        Node temp = head;
-//        while (temp.next != null) temp = temp.next;
-//        temp.next = tail;
-//    }
-//
-//    int getSizeLL() {
-//        int size = 0;
-//        Node temp = head;
-//        while(temp!=null) {
-//            temp=temp.next;
-//            size++;
-//        }
-//        return size;
-//    }
-//
-//    void insertException(int val, int pos) {
-//        Node n = new Node(val);
-//        int sizeLL = getSizeLL();
-//        if(pos<0 || pos>sizeLL) {
-//            System.out.println("Invalid Size");
-//        } else if(pos==0) {
-//            n.next = head;
-//            head = n;
-//        } else {
-//            Node temp = head;
-//            while(--pos != 0) {
-//                temp = temp.next;
-//            }
-//            n.next = temp.next;
-//            temp.next = n;
-//        }
-//    }
-//
-//    void insertAtPos(int val, int pos) {
-//
-//        if (pos <= 1) {
-//            Node n = new Node(val);
-//            n.next = head;
-//            head = n;
-//            return;
-//        }
-//
-//        if (head == null) {
-//            head = new Node(null);
-//        }
-//
-//        Node curr = head;
-//        int i = 1;
-//
-//        while (i < pos - 1) {
-//            if (curr.next == null) {
-//                curr.next = new Node(null);
-//            }
-//            curr = curr.next;
-//            i++;
-//        }
-//
-//        Node n = new Node(val);
-//        n.next = curr.next;
-//        curr.next = n;
-//    }
-//
-//    void deleteAtHead() {
-//        if(head==null) {
-//            System.out.print("Linked List Empty");
-//            return;
-//        }
-//        Node temp = head;
-//        head = head.next;
-//        temp = null;
-//        System.out.print("Head Node deleted\n");
-//    }
-//
-//    void deleteByValue(int val) {
-//        if(head == null) {
-//            System.out.println("Linked List Empty");
-//            return;
-//        }
-//        if(head.data==val) {
-//            deleteAtHead();
-//            return;
-//        }
-//        Node temp = head;
-//        while(temp.next!=null && temp.next.data!=val) {
-//            temp = temp.next;
-//        }
-//        if(temp.next==null) {
-//            System.out.println("Value not found");
-//            return;
-//        }
-//        Node toDelete = temp.next;
-//        temp.next = temp.next.next;
-//        toDelete = null;
-//    }
-//
-//    void printLL() {
-//        Node temp = head;
-//        while (temp != null) {
-//            System.out.print(temp.data + "->");
-//            temp = temp.next;
-//        }
-//        System.out.print("NULL\n");
-//    }
-//}
-//
-//class Drivercode {
-//    public static void main(String[] args) {
-//        DLL dll = new DLL();
-//        dll.insertAtHead(10);
-//        dll.insertAtHead(20);
-//        dll.insertAtHead(70);
-//        dll.printLL();
-//        dll.insertAtEnd(50);
-//        dll.insertAtEnd(60);
-//        dll.printLL();
-//        dll.insertAtPos(90, 9);
-//        dll.insertAtPos(40, 4);
-//        dll.printLL();
-//        dll.insertAtPos(30, 3);
-//        dll.insertAtPos(5, -3);
-//        dll.printLL();
-//        dll.insertAtPos(3, 1);
-//        dll.printLL();
-//        dll.insertException(999, 90);
-//        dll.insertException(1000, -999);
-//
-//        dll.deleteAtHead();
-//        dll.deleteByValue(60);
-//        dll.printLL();
-//        dll.deleteByValue(97);
-//    }
-//}
+package DataStructures.LinkedList.Doubly;
+
+class Node {
+    int data;
+    Node next;
+    Node prev;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+        this.prev = null;
+    }
+}
+
+public class DLL {
+    Node head;
+
+    DLL() {
+        this.head = null;
+    }
+
+    public void insertAtHead(int data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        if (head != null) {
+            head.prev = newNode;
+        }
+        head = newNode;
+    }
+
+    public void insertAtEnd(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.next = newNode;
+        newNode.prev = temp;
+    }
+
+    public int getSizeLL() {
+        int size = 0;
+        Node temp = head;
+        while (temp != null) {
+            temp = temp.next;
+            size++;
+        }
+        return size;
+    }
+
+    public void insertAtPos(int data, int pos) {
+        if (pos < 1) {
+            System.out.println("Invalid position");
+            return;
+        }
+        if (pos == 1) {
+            insertAtHead(data);
+            return;
+        }
+        Node newNode = new Node(data);
+        Node temp = head;
+        for (int i = 1; i < pos - 1; i++) {
+            if (temp == null) {
+                System.out.println("Invalid position");
+                return;
+            }
+            temp = temp.next;
+        }
+        if (temp == null) {
+            System.out.println("Invalid position");
+            return;
+        }
+        newNode.next = temp.next;
+        if (temp.next != null) {
+            temp.next.prev = newNode;
+        }
+        temp.next = newNode;
+        newNode.prev = temp;
+    }
+
+    public void deleteAtHead() {
+        if (head == null) {
+            return;
+        }
+        if (head.next != null) {
+            head.next.prev = null;
+        }
+        head = head.next;
+    }
+
+    public void deleteAtEnd() {
+        if (head == null) {
+            return;
+        }
+        if (head.next == null) {
+            head = null;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.prev.next = null;
+    }
+
+    public void deleteByValue(int data) {
+        if (head == null) {
+            return;
+        }
+        if (head.data == data) {
+            deleteAtHead();
+            return;
+        }
+        Node temp = head;
+        while (temp != null && temp.data != data) {
+            temp = temp.next;
+        }
+        if (temp == null) {
+            System.out.println("Value not found");
+            return;
+        }
+        if (temp.next != null) {
+            temp.next.prev = temp.prev;
+        }
+        if (temp.prev != null) {
+            temp.prev.next = temp.next;
+        }
+    }
+
+    public void printLL() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("NULL");
+    }
+
+    public void printLLReverse() {
+        Node temp = head;
+        if (temp == null) {
+            return;
+        }
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.prev;
+        }
+        System.out.println("NULL");
+    }
+
+    public static void main(String[] args) {
+        DLL dll = new DLL();
+        dll.insertAtHead(10);
+        dll.insertAtHead(20);
+        dll.insertAtHead(30);
+        dll.printLL();
+        dll.insertAtEnd(40);
+        dll.printLL();
+        dll.printLLReverse();
+        dll.insertAtPos(50, 3);
+        dll.printLL();
+        dll.deleteAtHead();
+        dll.printLL();
+        dll.deleteAtEnd();
+        dll.printLL();
+        dll.deleteByValue(10);
+        dll.printLL();
+    }
+}
