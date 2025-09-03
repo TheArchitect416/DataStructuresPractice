@@ -1,0 +1,45 @@
+public class Stacks {
+    int size;
+    int [] arr;
+    int top;
+
+    Stacks(int size) {
+        this.size = size;
+        arr = new int[size];
+        top = -1;
+    }
+
+    void push(char c) {
+        if(top==size-1) {
+            return;
+        }
+        top++;
+        arr[top] = c;
+    }
+
+    void pop() {
+        if(top==-1) {
+            return;
+        }
+        top--;
+    }
+    boolean isEmpty() {
+        return top == -1;
+    }
+}
+
+class Solution {
+    public boolean isValid(String s) {
+        Stacks st = new Stacks[s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(c=="{" || c=="(" || c=="[") {
+                st.push(c);
+            }
+            if(c=="}" || c==")" || c=="]") {
+                st.pop();
+            }
+        }
+        return st.isEmpty();
+    }
+}
