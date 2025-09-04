@@ -102,6 +102,47 @@ public class BinarySearchTrees {
         }
         return val;
     }
+
+    public boolean isValidBST(Node root) {
+        return isValidBSTUtil(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean isValidBSTUtil(Node node, long min, long max) {
+        if (node == null) {
+            return true;
+        }
+        if (node.data <= min || node.data >= max) {
+            return false;
+        }
+        return isValidBSTUtil(node.left, min, node.data) && isValidBSTUtil(node.right, node.data, max);
+    }
+
+    public void recoverTree(Node root) {
+        Node[] nodes = new Node[2];
+        Node[] prev = new Node[1];
+        inorderTraversal(root, nodes, prev);
+        if (nodes[0] != null && nodes[1] != null) {
+            int temp = nodes[0].data;
+            nodes[0].data = nodes[1].data;
+            nodes[1].data = temp;
+        }
+    }
+
+    private void inorderTraversal(Node root, Node[] nodes, Node[] prev) {
+        if (root == null) {
+            return;
+        }
+        inorderTraversal(root.left, nodes, prev);
+        if (prev[0] != null && root.data < prev[0].data) {
+            if (nodes[0] == null) {
+                nodes[0] = prev[0];
+            }
+            nodes[1] = root;
+        }
+        prev[0] = root;
+        inorderTraversal(root.right, nodes, prev);
+    }
+
 }
 
 
@@ -143,5 +184,9 @@ class Drivercode {
         System.out.println("\n");
         System.out.println("Searching for 25: " + bst.searchBST(25));
         System.out.println("Searching for 75: " + bst.searchBST(75));
+
+        System.out.println("\n");
+        System.out.println("Validating if the tree is a BST: ");
+        System.out.println(bst.isValidBST(bst.root));
     }
 }
