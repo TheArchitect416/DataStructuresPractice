@@ -1,46 +1,65 @@
 package DataStructures.Trees;
 
-class Node {
-    Node left;
-    Node right;
-    int data;
+import java.util.Queue;
+import java.util.LinkedList;
 
-    Node(int data) {
-        this.data = data;
-        left = null;
-        right = null;
-    }
-}
+//class Node {
+//    Node left;
+//    Node right;
+//    int data;
+//
+//    Node(int data) {
+//        this.data = data;
+//        left = null;
+//        right = null;
+//    }
+//}
+
 public class BinaryTrees {
     Node createNode(int val) {
         return new Node(val);
     }
 
-    static void PreDFS(Node root) {
+    static void preDFS(Node root) {
         if(root == null) {
             return;
         }
         System.out.print(root.data + " ");
-        PreDFS(root.left);
-        PreDFS(root.right);
+        preDFS(root.left);
+        preDFS(root.right);
     }
 
-    static void InDFS(Node root) {
+    static void inDFS(Node root) {
         if(root == null) {
             return;
         }
-        InDFS(root.left);
+        inDFS(root.left);
         System.out.print(root.data + " ");
-        InDFS(root.right);
+        inDFS(root.right);
     }
 
-    static void PostDFS(Node root) {
+    static void postDFS(Node root) {
         if(root == null) {
             return;
         }
-        PostDFS(root.left);
-        PostDFS(root.right);
+        postDFS(root.left);
+        postDFS(root.right);
         System.out.print(root.data + " ");
+    }
+
+    static void bfs(Node root) {
+        Queue<Node> q = new LinkedList<>();
+        q.offer(root);
+        while(!q.isEmpty()) {
+            Node curr = q.poll();
+            System.out.print(curr.data + " ");
+            if (curr.left != null) {
+                q.offer(curr.left);
+            }
+            if (curr.right != null) {
+                q.offer(curr.right);
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -60,21 +79,13 @@ public class BinaryTrees {
         root.right.left.right = bt.createNode(9);
 
         System.out.print("\nPre-order : ");
-        bt.PreDFS(root);
+        bt.preDFS(root);
         System.out.print("\nIn-order : ");
-        bt.InDFS(root);
+        bt.inDFS(root);
         System.out.print("\nPost-order : ");
-        bt.PostDFS(root);
+        bt.postDFS(root);
+
+        System.out.print("\nBFS : ");
+        bt.bfs(root);
     }
 }
-
-
-
-
-
-
-
-
-//DFS answers:
-//In : 4 2 8 5 1 15 6 9 3 7
-//Post : 4 8 5 2 15 9 6 7 3 1
